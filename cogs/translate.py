@@ -36,6 +36,20 @@ class Translate(commands.Cog):
 
         await interaction.response.send_message(embed=embed)
 
+    @commands.slash_command(name="detect", description="Detect the language of a text",
+                            guild_ids=[861259655011237939])
+    async def detect(self, interaction: discord.Interaction, message: str):
+        response = await self.bot.internet.post_json("/translate/detect",
+                                                     data=json.dumps({"text": message}))
+        response = response.get("response")
+        embed = discord.Embed(
+            title=f"Detected: {response.get('language').title()}",
+            description=None,
+            color=interaction.user.color,
+        )
+        embed.add_field(name="Source Text", value=message, inline=False)
+        embed.set_footer(text=f"Confidence: {response.get('confidence')}%")
+        await interaction.response.send_message(embed=embed)
 
 def setup(bot):
     bot.add_cog(Translate(bot))

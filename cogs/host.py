@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 
+import platform
 
 class Host(commands.Cog):
     def __init__(self, bot):
@@ -12,8 +13,10 @@ class Host(commands.Cog):
         embed = discord.Embed(
             title=data.get("hostname", "Host Info"),
             color=interaction.guild.me.color,
+            description=f"My front-end runs on {platform.system()}.\n"
+                        f"## Back-end"
         )
-        embed.add_field(name="Operating System", value=data["os"], inline=False)
+        embed.add_field(name="OS", value=data["os"], inline=False)
         embed.add_field(name="CPU Threads", value=data["cpu_threads"], inline=False)
         embed.add_field(name="CPU Usage", value=f"{data['cpu_usage']}%", inline=False)
         embed.add_field(name="Memory Usage", value=f"{data['memory_usage']}%", inline=False)
