@@ -1,3 +1,5 @@
+import subprocess
+
 import discord
 from discord.ext import commands
 
@@ -71,6 +73,22 @@ async def unload(interaction, cog: str):
         await interaction.response.send_message(f"Unloaded cog `{cog}`")
     except Exception as e:
         await interaction.response.send_message(f"Failed to unload cog `{cog}`: {str(e)[:100] + '...'}")
+
+@bot.slash_command(name="update", description="Pulls from git")
+@commands.is_owner()
+async def update(interaction):
+    output = subprocess.check_output("git rev-parse --is-inside-work-tree", shell=True).decode("utf-8")
+    embed = discord.Embed(title="Update results", color=interaction.guild.me.color)
+
+    if output != "true\n":
+        embed.add_field(name="Client Update", value="Not a git repository", inline=False)
+    else:
+        client_output = subprocess.check_output("git pull", shell=True).decode("utf-8")
+        embed.add_field(name="Client Update", value=client_output[:1000], inline=False)
+
+    server_output = await bot.internet.get_json("host/update/")
+    embed.add_field(name="Server Update", value=server_output["response"][:1000], inline=False)
+    await interaction.response.send_message(embed=embed)
 
 
 @bot.event
