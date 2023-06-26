@@ -15,6 +15,8 @@ class ErrorHandler(commands.Cog):
             await ctx.respond("You don't have the required permissions to use this command.")
         elif isinstance(error, commands.MissingRequiredArgument):
             await ctx.respond("You are missing a required argument.")
+        else:
+            raise error
 
 
 def setup(bot):
