@@ -5,6 +5,7 @@ from discord.ext import commands
 
 import json
 import os
+import sys
 from pathlib import Path
 
 from assets import internet, shell
@@ -74,6 +75,7 @@ async def unload(interaction, cog: str):
     except Exception as e:
         await interaction.response.send_message(f"Failed to unload cog `{cog}`: {str(e)[:100] + '...'}")
 
+
 @bot.slash_command(name="update", description="Pulls from git")
 @commands.is_owner()
 async def update(interaction):
@@ -89,6 +91,30 @@ async def update(interaction):
     server_output = await bot.internet.get_json("host/update/")
     embed.add_field(name="Server Update", value=server_output["response"][:1000], inline=False)
     await interaction.response.send_message(embed=embed)
+
+
+@bot.slash_command(name="sync", description="syncs slash commands")
+@commands.is_owner()
+async def sync(interaction):
+    await bot.sync_commands()
+    await interaction.response.send_message("Synced slash commands!")
+
+
+@bot.slash_command(name="restart", aliases=["reboot"], description="Restarts the bot", guild_ids=[861259655011237939])
+@commands.is_owner()
+async def restart(interaction):
+    await interaction.response.send_message("Restarting...")
+    os.execl(sys.executable, 'python', __file__, *sys.argv[1:])
+    await bot.close()
+    sys.exit(0)
+
+
+@bot.slash_command(name="shutdown", aliases=["stop"], description="Stops the bot", guild_ids=[861259655011237939])
+@commands.is_owner()
+async def shutdown(interaction):
+    await interaction.response.send_message("Shutting down...")
+    await bot.close()
+    sys.exit(0)
 
 
 @bot.event
