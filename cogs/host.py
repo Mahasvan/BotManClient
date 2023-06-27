@@ -1,7 +1,12 @@
+import time
+
 import discord
 from discord.ext import commands
 
 import platform
+import random
+
+from assets import constants
 
 
 class Host(commands.Cog):
@@ -25,6 +30,17 @@ class Host(commands.Cog):
         embed.add_field(name="CPU Threads", value=data["cpu_threads"], inline=False)
         embed.add_field(name="CPU Usage", value=f"{data['cpu_usage']}%", inline=False)
         embed.add_field(name="Memory Usage", value=f"{data['memory_usage']}%", inline=False)
+        await interaction.response.send_message(embed=embed)
+
+    @host.command(name="uptime")
+    async def uptime(self, interaction):
+        """How long have I been awake?"""
+        now = time.monotonic()
+        response = await self.bot.internet.get_json("/host/uptime")
+
+        embed = discord.Embed(title="I have been awake for:", description=f"_{response['response']['text']}_",
+                              color=interaction.guild.me.color)
+        embed.set_footer(text=random.choice(constants.uptime_footers))
         await interaction.response.send_message(embed=embed)
 
 
