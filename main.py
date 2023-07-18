@@ -22,12 +22,12 @@ port = config["server-port"]
 bot.internet = internet.Internet(host=host, port=port)
 
 
-@bot.slash_command(name="ping", description="Pong!", guild_ids=[861259655011237939])
+@bot.slash_command(name="ping", description="Pong!")
 async def ping(interaction):
     await interaction.response.send_message(f"Pong! Latency: {round(bot.latency * 1000)}ms")
 
 
-@bot.slash_command(name="reload", description="Reload a cog", guild_ids=[861259655011237939])
+@bot.slash_command(name="reload", description="Reload a cog")
 @commands.is_owner()
 async def reload(interaction, cog: str = None):
     if not cog:
@@ -55,7 +55,7 @@ async def reload(interaction, cog: str = None):
     await bot.sync_commands()
 
 
-@bot.slash_command(name="load", description="Load a cog", guild_ids=[861259655011237939])
+@bot.slash_command(name="load", description="Load a cog")
 @commands.is_owner()
 async def load(interaction, cog: str):
     try:
@@ -67,7 +67,7 @@ async def load(interaction, cog: str):
         await interaction.response.send_message(f"Failed to load cog `{cog}`: {str(e)[:100] + '...'}")
 
 
-@bot.slash_command(name="unload", description="Unload a cog", guild_ids=[861259655011237939])
+@bot.slash_command(name="unload", description="Unload a cog")
 @commands.is_owner()
 async def unload(interaction, cog: str):
     try:
@@ -101,7 +101,7 @@ async def sync(interaction):
     await interaction.response.send_message("Synced slash commands!")
 
 
-@bot.slash_command(name="restart", aliases=["reboot"], description="Restarts the bot", guild_ids=[861259655011237939])
+@bot.slash_command(name="restart", aliases=["reboot"], description="Restarts the bot")
 @commands.is_owner()
 async def restart(interaction):
     await interaction.response.send_message("Restarting...")
@@ -110,7 +110,7 @@ async def restart(interaction):
     sys.exit(0)
 
 
-@bot.slash_command(name="shutdown", aliases=["stop"], description="Stops the bot", guild_ids=[861259655011237939])
+@bot.slash_command(name="shutdown", aliases=["stop"], description="Stops the bot")
 @commands.is_owner()
 async def shutdown(interaction):
     await interaction.response.send_message("Shutting down...")

@@ -6,6 +6,17 @@ from discord.ext import commands
 
 from assets import time_assets
 
+# todo: fix
+"""
+discord.errors.ApplicationCommandInvokeError: 
+Application Command raised an exception: 
+ContentTypeError: 0, 
+message='Attempt to decode JSON with unexpected mimetype: 
+text/plain; charset=utf-8', 
+url=URL('http://localhost:8000/spotify/search/album?query=whatever')
+"""
+# randomly
+
 
 def embed_builder(
         query: str,

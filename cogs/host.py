@@ -15,8 +15,7 @@ class Host(commands.Cog):
 
     host = discord.SlashCommandGroup("host", description="Commands related to the host machine.")
 
-    @host.command(name="info", description="Info about the machine in which I am hosted.",
-                  guild_ids=[861259655011237939, 830456831183945778])
+    @host.command(name="info", description="Info about the machine in which I am hosted.")
     async def host_info(self, interaction: discord.Interaction):
         data = await self.bot.internet.get_json("/host/info")
         embed = discord.Embed(

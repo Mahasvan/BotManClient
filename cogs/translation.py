@@ -19,8 +19,7 @@ class Translate(commands.Cog):
         self.lang_dict = await self.bot.internet.get_json("/translate/languages")
         self.lang_dict = self.lang_dict.get("response")
 
-    @translation.command(name="translate", description="Translate text to another language",
-                         guild_ids=[861259655011237939])
+    @translation.command(name="translate", description="Translate text to another language")
     async def translate(self, interaction: discord.Interaction,
                         message: str, from_language: str = "auto", to_language: str = "en"):
         response = await self.bot.internet.post_json("/translate/translate",
@@ -38,8 +37,7 @@ class Translate(commands.Cog):
 
         await interaction.response.send_message(embed=embed)
 
-    @translation.command(name="detect", description="Detect the language of a text",
-                         guild_ids=[861259655011237939])
+    @translation.command(name="detect", description="Detect the language of a text")
     async def detect(self, interaction: discord.Interaction, message: str):
         response = await self.bot.internet.post_json("/translate/detect",
                                                      data=json.dumps({"text": message}))
