@@ -18,6 +18,7 @@ with open("config.json") as f:
 
 host = config["server-ip"]
 port = config["server-port"]
+
 bot.internet = internet.Internet(host=host, port=port)
 
 
