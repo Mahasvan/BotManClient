@@ -1,3 +1,5 @@
+import json
+
 import aiohttp
 
 
@@ -26,6 +28,7 @@ class Internet:
         url = self.url_builder(endpoint)
         async with self.session.get(url, **kwargs) as response:
             response = (await response.json())
+
         return response
 
     async def post(self, endpoint: str, data: dict = None, params: dict = None):
@@ -44,4 +47,5 @@ class Internet:
         url = self.url_builder(endpoint)
         async with self.session.post(url, headers=headers, data=data, params=params) as response:
             response = (await response.json())
+            # todo: response might be "Internal Server Error"
         return response
