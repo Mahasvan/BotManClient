@@ -6,7 +6,7 @@ from discord.ext import commands
 import platform
 import random
 
-from assets import constants
+from assets import constants, bot_assets
 
 
 class Host(commands.Cog):
@@ -20,7 +20,7 @@ class Host(commands.Cog):
         data = await self.bot.internet.get_json("/host/info")
         embed = discord.Embed(
             title=data.get("hostname", "Host Info"),
-            color=interaction.guild.me.color,
+            color=bot_assets.get_color(interaction),
             description=f"My front-end runs on {platform.system()}.\n"
                         f"## Back-end"
         )
@@ -38,7 +38,7 @@ class Host(commands.Cog):
         response = await self.bot.internet.get_json("/host/uptime")
 
         embed = discord.Embed(title="I have been awake for:", description=f"_{response['response']['text']}_",
-                              color=interaction.guild.me.color)
+                              color=bot_assets.get_color(interaction))
         embed.set_footer(text=random.choice(constants.uptime_footers))
         await interaction.response.send_message(embed=embed)
 

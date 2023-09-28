@@ -8,7 +8,7 @@ import os
 import sys
 from pathlib import Path
 
-from assets import internet, shell
+from assets import internet, shell, bot_assets
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix="$", intents=intents)
@@ -45,7 +45,7 @@ async def reload(interaction, cog: str = None):
             failures.append(c[:-3])
     embed = discord.Embed(
         title="Reload Results",
-        color=interaction.guild.me.color,
+        color=bot_assets.get_color(interaction)
     )
     if successes:
         embed.add_field(name="Successes", value="\n".join(successes), inline=False)
@@ -81,7 +81,7 @@ async def unload(interaction, cog: str):
 @commands.is_owner()
 async def update(interaction):
     output = subprocess.check_output("git rev-parse --is-inside-work-tree", shell=True).decode("utf-8")
-    embed = discord.Embed(title="Update results", color=interaction.guild.me.color)
+    embed = discord.Embed(title="Update results", color=bot_assets.get_color(interaction))
 
     if output != "true\n":
         embed.add_field(name="Client Update", value="Not a git repository", inline=False)
