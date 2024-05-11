@@ -5,7 +5,7 @@ import aiohttp
 
 class Internet:
     def __init__(self, host: str, port: int):
-        self.session = aiohttp.ClientSession()
+        self.session = aiohttp.ClientSession(trust_env=True)
         self.host = host
         self.port = port
 
