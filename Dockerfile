@@ -5,10 +5,7 @@ FROM ubuntu:latest
 RUN apt-get update
 
 # install python
-RUN apt-get install -y python3
-RUN apt-get install -y python3-pip
-RUN apt-get install -y python3-venv
-RUN apt-get install -y git
+RUN apt-get install -y python3 python3-pip python3-venv git
 
 COPY . /BotManClient
 WORKDIR /BotManClient
