@@ -14,9 +14,8 @@ COPY . /BotManClient
 WORKDIR /BotManClient
 RUN python3 -m venv ./venv
 RUN ./venv/bin/python3 -m ensurepip
-RUN ./venv/bin/pip install -r requirements.txt
+RUN . venv/bin/activate && pip install -r requirements.txt
 # install requirements
 
 # Run
-CMD echo "Running BotManClient..."
-CMD ["./venv/bin/python3", "main.py"]
+CMD . venv/bin/activate && exec ./venv/bin/python3 main.py
