@@ -88,7 +88,7 @@ class Spotify(commands.Cog):
         self.bot = bot
 
     @spotify.command(name="track")
-    async def search_track(self, interaction: discord.Interaction, query: str):
+    async def search_track(self, interaction, query: str):
         """Search for a track on Spotify"""
         response = await self.bot.internet.get_json("/spotify/search/track", params={"query": query})
 
@@ -111,7 +111,7 @@ class Spotify(commands.Cog):
         await interaction.response.send_message(embed=embed)
 
     @spotify.command(name="album")
-    async def search_album(self, interaction: discord.Interaction, query: str):
+    async def search_album(self, interaction, query: str):
         """Search for an album on Spotify"""
         response = await self.bot.internet.get_json("/spotify/search/album", params={"query": query})
 
@@ -130,7 +130,7 @@ class Spotify(commands.Cog):
         await interaction.response.send_message(embed=embed)
 
     @spotify.command(name="artist")
-    async def search_artist(self, interaction: discord.Interaction, query: str):
+    async def search_artist(self, interaction, query: str):
         """Search for an artist on Spotify"""
         response = await self.bot.internet.get_json("/spotify/search/artist", params={"query": query})
 
